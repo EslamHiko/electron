@@ -35,6 +35,11 @@ void NodeDebugger::Start() {
                            debug_options.host_port),
                        true /* is_main */))
     DCHECK(env_->inspector_agent()->IsListening());
+
+  if (env_->inspector_agent()->options().break_node_first_line) {
+    env_->inspector_agent()->PauseOnNextJavascriptStatement(
+        "Break at bootstrap");
+  }
 }
 
 void NodeDebugger::Stop() {
